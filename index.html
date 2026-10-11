@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bottle Mani | Premium Haircut</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#f7e7c1;font-family:Arial,sans-serif}
+header{text-align:center;padding:35px 15px;border-bottom:1px solid #b38a45}
+.logo{font-size:14px;letter-spacing:5px;color:#cda85d}
+h1{font-size:40px;margin:14px 0;color:#e4c477}
+.hero{padding:55px 20px;text-align:center;background:radial-gradient(ellipse,#392611,#090909 70%)}
+.hero p{color:#ddd;line-height:1.7}
+.price{font-size:28px;color:#e5c579;font-weight:bold;margin:25px}
+section{max-width:520px;margin:25px auto;padding:24px}
+h2{color:#e5c579}
+label{display:block;margin:15px 0 7px}
+input,select{width:100%;padding:14px;border:1px solid #8c6b35;border-radius:7px;background:#171717;color:white;font-size:16px}
+button{width:100%;padding:15px;margin-top:20px;background:#d8b66b;color:#15100a;font-weight:bold;border:0;border-radius:7px;font-size:16px}
+.info{border:1px solid #6e542e;border-radius:12px;padding:18px;line-height:1.8}
+footer{text-align:center;padding:25px;color:#aaa;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">PREMIUM HAIRCUT SERVICE</div>
+<h1>BOTTLE MANI</h1>
+<div>YOUR STYLE. YOUR CONFIDENCE.</div>
+</header>
+<div class="hero">
+<h2>Fresh Cut. Sharp Look.</h2>
+<p>Book your haircut appointment easily.<br>Simple booking • Personal service</p>
+<div class="price">SGD $5 <small> / person</small></div>
+</div>
+<section>
+<div class="info">
+<h2>Opening Slots</h2>
+Monday – Friday: 7:30 PM<br>
+Saturday – Sunday: 6:00 PM &amp; 7:30 PM<br>
+Location: Tuas 30 Bay Drive, Singapore 637548
+</div>
+<h2>Book an Appointment</h2>
+<p>Enter your details and choose your slot.</p>
+<form id="booking">
+<label for="name">Your Name</label>
+<input id="name" required placeholder="Enter your name">
+<label for="phone">Phone Number</label>
+<input id="phone" type="tel" required placeholder="Enter phone number">
+<label for="date">Appointment Date</label>
+<input id="date" type="date" required>
+<label for="slot">Available Time</label>
+<select id="slot" required>
+<option value="">Choose a time</option>
+</select>
+<button type="submit">Request Booking on WhatsApp</button>
+</form>
+<p id="message"></p>
+</section>
+<footer>BOTTLE MANI • HAIRCUTS AT SGD $5</footer>
+<script>
+const dateInput=document.getElementById('date');
+const slotSelect=document.getElementById('slot');
+dateInput.min=new Date().toLocaleDateString('en-CA');
+function updateSlots(){
+slotSelect.innerHTML='<option value="">Choose a time</option>';
+if(!dateInput.value)return;
+const day=new Date(dateInput.value+'T12:00:00').getDay();
+const times=(day===0||day===6)?['6:00 PM','7:30 PM']:['7:30 PM'];
+times.forEach(t=>{const o=document.createElement('option');o.value=t;o.textContent=t;slotSelect.appendChild(o)});
+}
+dateInput.addEventListener('change',updateSlots);
+document.getElementById('booking').addEventListener('submit',e=>{
+e.preventDefault();
+const name=document.getElementById('name').value.trim();
+const phone=document.getElementById('phone').value.trim();
+const date=dateInput.value;
+const slot=slotSelect.value;
+if(!name||!phone||!date||!slot)return;
+const msg=`Bottle Mani haircut booking request%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0ADate: ${date}%0ATime: ${encodeURIComponent(slot)}%0APrice: SGD $5`;
+window.open('https://wa.me/919500681437?text='+msg,'_blank');
+});
+</script>
+</body>
+</html>
